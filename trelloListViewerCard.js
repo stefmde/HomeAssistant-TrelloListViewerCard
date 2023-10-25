@@ -53,7 +53,7 @@ class TrelloListViewerCard extends HTMLElement
 
             // Cards
             const config_cards_limit_count = this.config.global_cards_limit_count !== undefined ? this.config.global_cards_limit_count : 100;
-            const config_cards_click_behavior = this.config.global_cards_click_behavior !== undefined ? this.config.global_cards_click_behavior : "none"; // open, move, close, delete, none
+            const config_cards_click_behavior = this.config.global_cards_click_behavior !== undefined ? this.config.global_cards_click_behavior : "none"; // TODO open, move, close, delete, none
             const config_cards_click_confirm = this.config.global_cards_click_confirm !== undefined ? this.config.global_cards_click_confirm : true;
             const config_cards_click_move_to_list = this.config.global_cards_click_move_to_list !== undefined ? this.config.global_cards_click_move_to_list : null;
             
@@ -62,6 +62,7 @@ class TrelloListViewerCard extends HTMLElement
             const config_cards_show_due = this.config.cards_show_due !== undefined ? this.config.cards_show_due : true;
             const config_cards_show_desc = this.config.cards_show_desc !== undefined ? this.config.cards_show_desc : false;
             const config_cards_show_is_important = this.config.cards_show_is_important !== undefined ? this.config.cards_show_is_important : true;
+            const config_cards_sort_by_name = this.config.cards_sort_by_name !== undefined ? this.config.cards_sort_by_name : false;
 
             let trelloData = new TrelloData();
             let cardDatas = [];
@@ -77,7 +78,7 @@ class TrelloListViewerCard extends HTMLElement
                 await getImportantLabel();
                 await getList();
                 await getCards();
-                sortCards();
+                orderCards();
                 console.log(cardDatas);
                 if(cardDatas.length == previousCardDataCount && config_global_reduce_requests) {
                     return;
@@ -171,6 +172,7 @@ class TrelloListViewerCard extends HTMLElement
                 newCard.due = card.due;
                 newCard.dueComplete = card.dueComplete;
                 newCard.labels = card.labels;
+                newCard.pos = card.pos;
                 if(newCard.labels == null || newCard.labels == undefined) {
                     newCard.labels = [];
                 }
@@ -180,8 +182,22 @@ class TrelloListViewerCard extends HTMLElement
                 cardDatas.push(newCard);
             }
 
-            function sortCards() {
-                cardDatas = cardDatas.sort((a, b) => a.isImportant == b.isImportant || a.name.localeCompare(b.name));
+            function orderCards() {
+                let importants = cardDatas.filter((card) => card.isImportant);
+                importants = sortCards(importants);
+                
+                let notImportants = cardDatas.filter((card) => !card.isImportant);
+                notImportants = sortCards(notImportants);
+
+                cardDatas = importants.concat(notImportants);
+            }
+
+            function sortCards(cards) {
+                if(config_cards_sort_by_name) {
+                    return cards.sort((a, b) => a.name.localeCompare(b.name));
+                } else {
+                    return cards.sort((a, b) => a.pos < b.pos);
+                }
             }
 
             async function getJson(url) {
@@ -372,6 +388,7 @@ class CardData {
     dueComplete;
     labels;
     shortUrl;
+    pos;
 }
 
 /*
