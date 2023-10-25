@@ -210,9 +210,7 @@ class TrelloListViewerCard extends HTMLElement
                 }
                 let json_data = await fetch(localUrl, {
                     headers: {
-                        Accept: 'application/json',
-                        // Authorization: 'Bearer ' + config_global_credentials_access_token,
-                        // 'Client-Id': config_global_credentials_client_id
+                        Accept: 'application/json'
                     }
                     })
                     .then(resp => resp.json())
@@ -246,10 +244,6 @@ class TrelloListViewerCard extends HTMLElement
                 content.innerHTML += cardsDiv.outerHTML;
             }
 
-            function cardClick(cardId) {
-                console.log("CardId: " + cardId);
-            }
-
             function printCard(cardData) {
                 const cardContainerDiv = document.createElement("div");
                 cardContainerDiv.style.marginBottom = "0.4em";
@@ -257,7 +251,7 @@ class TrelloListViewerCard extends HTMLElement
                 // cardContainerDiv.style.borderRadius = "12px";
                 // cardContainerDiv.style.borderTop = "1px solid " + getColorFromTemplate("--fc-theme-standard-border-color"); // 1px solid var(--fc-theme-standard-border-color,#ddd) !important
                 cardContainerDiv.style.padding = "0.5em";
-                cardContainerDiv.setAttribute("onClick", "cardClick('" + cardData.id + "')");
+                //cardContainerDiv.setAttribute("onClick", "cardClick('" + cardData.id + "')");
 
                 // Label
                 if(config_cards_show_labels) {
@@ -284,7 +278,8 @@ class TrelloListViewerCard extends HTMLElement
                 if(config_cards_show_is_important && cardData.isImportant) {
                     const cardNameImportantSpan = document.createElement("span");
                     cardNameImportantSpan.innerHTML = "✭&nbsp;";
-                    cardNameImportantSpan.style.color = "red";
+                    cardNameImportantSpan.style.color = getColorFromTemplate("--primary-color");
+                    cardNameImportantSpan.style.marginRight = "0.3em";
                     cardNameWrapperDiv.innerHTML = cardNameImportantSpan.outerHTML;
                 }
                 const cardNameTextSpan = document.createElement("span");
