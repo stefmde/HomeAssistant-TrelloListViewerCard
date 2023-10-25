@@ -274,7 +274,8 @@ class TrelloListViewerCard extends HTMLElement
 
                 // Name
                 const cardNameWrapperDiv = document.createElement("div");
-                cardNameWrapperDiv.style.fontWeight = "bold";
+                //cardNameWrapperDiv.style.fontWeight = "bold";
+                cardNameWrapperDiv.style.fontSize = "1.2em";
                 if(config_cards_show_is_important && cardData.isImportant) {
                     const cardNameImportantSpan = document.createElement("span");
                     cardNameImportantSpan.innerHTML = "✭&nbsp;";

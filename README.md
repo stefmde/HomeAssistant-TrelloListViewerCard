@@ -1,10 +1,11 @@
 
 # Trello List Viewer Card for HomeAssistant
 
-Sample Image TBD
+| Trello Cards | Home Assistant Preview |
+|--|--|
+| ![Trello Cards](https://raw.githubusercontent.com/stefmde/HomeAssistant-TrelloListViewerCard/main/img/test-cards-in-trello.png) | ![Home Assistant Preview](https://raw.githubusercontent.com/stefmde/HomeAssistant-TrelloListViewerCard/main/img/favorite_config.png) |
 
-
-HACS Badge TBD
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 
 
 ## Description
@@ -41,11 +42,32 @@ TBD
 ## Samples
 Here are some sample configs to show you some possible configurations and help you find your config. The samples only shows the properties which are required or different from the default values. All the properties can be found [here.](https://github.com/stefmde/HomeAssistant-TrelloListViewerCard/tree/main#properties)
 
+![Sample image to show the config](https://raw.githubusercontent.com/stefmde/HomeAssistant-TwitchFollowedLiveStreamsCard/main/img/basic_config.png)
 
 ### My favorite
+![Home Assistant Preview](https://raw.githubusercontent.com/stefmde/HomeAssistant-TrelloListViewerCard/main/img/favorite_config.png)
 
-TBD
+    type: custom:trello-list-viewer-card
+    global_credentials_api_key: 6dr2aiH3VudFRgEtM8GXgi66UvadRDez
+    global_credentials_api_token: npeRfv3EVaGGdG7F6uH2WzNjqVAgKUxGcpcgb2hbpyE4rUrKfZiRfiTyNcBiMPiFC7Y9VoFXB869
+    global_credentials_board_name: Tasks
+    global_credentials_list_name: Test
+    global_important_label_name: Important
+    global_cards_limit_count: 12
+    cards_show_labels: false
+    cards_show_label_text: false
+    cards_show_due: false
 
+
+### Basic
+![Home Assistant Preview](https://raw.githubusercontent.com/stefmde/HomeAssistant-TrelloListViewerCard/main/img/basic_config.png)
+
+    type: custom:trello-list-viewer-card
+    global_credentials_api_key: 6dr2aiH3VudFRgEtM8GXgi66UvadRDez
+    global_credentials_api_token: npeRfv3EVaGGdG7F6uH2WzNjqVAgKUxGcpcgb2hbpyE4rUrKfZiRfiTyNcBiMPiFC7Y9VoFXB869
+    global_credentials_board_name: Tasks
+    global_credentials_list_name: Test
+    global_important_label_name: Important
 
 ## Debug
 1. You can use the property `global_debug` and set it to `true` to see more logs in the console.
