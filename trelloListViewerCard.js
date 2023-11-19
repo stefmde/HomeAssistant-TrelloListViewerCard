@@ -16,8 +16,14 @@ class TrelloListViewerCard extends HTMLElement
             this.appendChild(card);
             const content = this.content;
 
-            // ### cardsCountDiv
-            const cardsCountDiv = document.createElement("div");
+            // ### cardHeaderDiv
+            const cardHeaderDiv = document.createElement("div");
+
+            const doneDiv = document.createElement("div");
+            doneDiv.style.paddingLeft = this.config.streams_padding_left_size !== undefined ? this.config.streams_padding_left_size : "1em";
+            doneDiv.style.paddingRight = this.config.streams_padding_right_size !== undefined ? this.config.streams_padding_right_size : "1em";
+            doneDiv.style.paddingTop = this.config.streams_padding_top_size !== undefined ? this.config.streams_padding_top_size : "0em";
+            doneDiv.style.paddingBottom = this.config.streams_padding_bottom_size !== undefined ? this.config.streams_padding_bottom_size : "0em";
 
             // ### Cards
             const cardsDiv = document.createElement("div");
@@ -47,6 +53,7 @@ class TrelloListViewerCard extends HTMLElement
             
             const config_global_debug = this.config.global_debug !== undefined ? this.config.global_debug : false;
             const config_global_show_header = this.config.global_show_header !== undefined ? this.config.global_show_header : true;
+            const config_global_show_header_sub_total = this.config.global_show_header_sub_total !== undefined ? this.config.global_show_header_sub_total : true;
             const config_global_update_interval_s = this.config.global_update_interval_s !== undefined ? this.config.global_update_interval_s * 1000 : 60 * 1000;
             const config_global_disable_auto_refresh = this.config.global_disable_auto_refresh !== undefined ? this.config.global_disable_auto_refresh : false;
             const config_global_reduce_requests = this.config.global_reduce_requests !== undefined ? this.config.global_reduce_requests : false;
@@ -64,8 +71,15 @@ class TrelloListViewerCard extends HTMLElement
             const config_cards_show_is_important = this.config.cards_show_is_important !== undefined ? this.config.cards_show_is_important : true;
             const config_cards_sort_by_name = this.config.cards_sort_by_name !== undefined ? this.config.cards_sort_by_name : false;
 
+            // Done
+            const config_done_show = this.config.done_show !== undefined ? this.config.done_show : false;
+            const config_done_list_name = this.config.done_list_name !== undefined ? this.config.done_list_name : null;
+            const config_done_show_total = this.config.done_total !== undefined ? this.config.done_total : false;
+            const config_done_show_last_seven_days = this.config.done_last_seven_days !== undefined ? this.config.done_last_seven_days : true;
+
             let trelloData = new TrelloData();
             let cardDatas = [];
+            let doneData = new DoneData();
             let previousCardDataCount = -1;
 
             // ### Functions
@@ -76,14 +90,16 @@ class TrelloListViewerCard extends HTMLElement
                 await getCurrentUser();
                 await getBoard();
                 await getImportantLabel();
-                await getList();
-                await getCards();
+                await getLists();
+                cardDatas = await getCards(trelloData.listId);
                 orderCards();
-                console.log(cardDatas);
+                if(config_global_debug) console.log(cardDatas);
+                await getDoneCounts();
                 if(cardDatas.length == previousCardDataCount && config_global_reduce_requests) {
                     return;
                 }
-                printHeader(cardDatas.length);
+                printHeader();
+                printDoneCounts();
                 printCards();
                 previousCardDataCount = cardDatas.length;
             }
@@ -140,28 +156,67 @@ class TrelloListViewerCard extends HTMLElement
                 trelloData.importantLabelColor = label.color;
             }
 
-            async function getList() {
+            async function getLists() {
+                const [listId, listName] = await getList(config_global_list_name);
+                trelloData.listId = listId;
+                trelloData.listName = listName;
+
+                if(config_done_show) {
+                    const [doneListId, doneListName] = await getList(config_done_list_name);
+                    trelloData.doneListId = doneListId;
+                    trelloData.doneListName = doneListName;
+                }
+            }
+
+            async function getList(listName) {
                 let url = const_url_get_lists_of_board;
                 url = url.replace("{board_id}", trelloData.boardId);
 
                 const lists = await getJson(url);
                 const list = lists.find(obj => {
-                                return obj.name === config_global_list_name;
+                                return obj.name === listName;
                             });
                 
-                trelloData.listId = list.id;
-                trelloData.listName = list.name;
+                return [list.id, list.name];
             }
 
-            async function getCards() {
+            async function getCards(listId) {
                 let url = const_url_get_cards_on_list;
-                url = url.replace("{list_id}", trelloData.listId);
+                url = url.replace("{list_id}", listId);
 
                 const cards = await getJson(url);
-                cardDatas = [];
+                const localCardDatas = [];
                 for (let i = 0; i < cards.length; i++) {
-                    parseCard(cards[i]);
+                    localCardDatas.push(parseCard(cards[i]));
                 }
+
+                return localCardDatas;
+            }
+
+            function dateAddDays(date, days) {
+                const localDate = new Date(date);
+                localDate.setDate(localDate.getDate() + days);
+                return localDate;
+            }
+
+            async function getDoneCounts() {
+                if(!config_done_show) {
+                    doneData.totalCount = 0;
+                    doneData.lastSevenDaysCount = 0;
+                    return;
+                }
+
+                const cards = await getCards(trelloData.doneListId);
+                const dateSevenDaysAgo = dateAddDays(Date.now(), -7);
+                doneData.totalCount = cards.length;
+                doneData.lastSevenDaysCount = 0;
+
+                for (let i = 0; i < cards.length; i++) {
+                    if(cards[i].dateLastActivity > dateSevenDaysAgo){
+                        doneData.lastSevenDaysCount++;
+                    }
+                }
+                if(config_global_debug) console.log(doneData);
             }
 
             function parseCard(card) {
@@ -178,8 +233,9 @@ class TrelloListViewerCard extends HTMLElement
                 }
 
                 newCard.shortUrl = card.shortUrl;
+                newCard.dateLastActivity = Date.parse(card.dateLastActivity);
                 newCard.isImportant = newCard.labels.some((x) => x.id == trelloData.importantLabelId);
-                cardDatas.push(newCard);
+                return newCard;
             }
 
             function orderCards() {
@@ -224,15 +280,51 @@ class TrelloListViewerCard extends HTMLElement
                 return json_data;
             }
 
-            function printHeader(cardCount) {
-                if(config_global_show_header) {
-                    const cardsCountDivH = document.createElement('h1');
-                    cardsCountDivH.classList.add("card-header");
-                    cardsCountDivH.style.paddingTop = "0.8em";
-                    cardsCountDivH.innerText = cardCount + " cards";
-                    cardsCountDiv.innerHTML = cardsCountDivH.outerHTML;
-                    content.innerHTML = cardsCountDiv.outerHTML;
+            function printHeader() {
+                if(!config_global_show_header) {
+                    return;
                 }
+                const cardHeaderDivH = document.createElement('h1');
+                cardHeaderDivH.classList.add("card-header");
+                cardHeaderDivH.style.paddingTop = "0.8em";
+                cardHeaderDivH.innerText = cardDatas.length;
+
+                if(config_cards_limit_count < cardDatas.length && config_global_show_header_sub_total) {
+                    cardHeaderDivH.innerText = config_cards_limit_count + "/" + cardDatas.length;
+                }
+
+                cardHeaderDivH.innerText += " cards";
+                cardHeaderDiv.innerHTML = cardHeaderDivH.outerHTML;
+                content.innerHTML = cardHeaderDiv.outerHTML;
+            }
+
+            function printDoneCounts() {
+                if(!config_done_show) {
+                    return;
+                }
+
+                const doneDivWrapperDiv = document.createElement('div');
+                doneDivWrapperDiv.style.paddingLeft = "0.4em";
+                doneDivWrapperDiv.style.paddingBottom = "0.4em";
+                doneDivWrapperDiv.style.fontSize = "1.2em";
+
+                let text = "Done: ";
+
+                if(config_done_show_last_seven_days) {
+                    text += doneData.lastSevenDaysCount + " W ";
+                }
+
+                if(config_done_show_last_seven_days && config_done_show_total) {
+                    text += " / ";
+                }
+
+                if(config_done_show_total) {
+                    text += doneData.totalCount + " T";
+                }
+
+                doneDivWrapperDiv.innerText = text;
+                doneDiv.innerHTML = doneDivWrapperDiv.outerHTML;
+                content.innerHTML += doneDiv.outerHTML;
             }
 
             function printCards() {
@@ -275,7 +367,7 @@ class TrelloListViewerCard extends HTMLElement
                 // Name
                 const cardNameWrapperDiv = document.createElement("div");
                 //cardNameWrapperDiv.style.fontWeight = "bold";
-                cardNameWrapperDiv.style.fontSize = "1.2em";
+//                cardNameWrapperDiv.style.fontSize = "1.2em";
                 if(config_cards_show_is_important && cardData.isImportant) {
                     const cardNameImportantSpan = document.createElement("span");
                     cardNameImportantSpan.innerHTML = "✭&nbsp;";
@@ -369,6 +461,9 @@ class TrelloData {
     listId;
     listName;
 
+    doneListId;
+    doneListName;
+
     importantLabelId;
     importantLabelName;
     importantLabelColor;
@@ -384,7 +479,13 @@ class CardData {
     dueComplete;
     labels;
     shortUrl;
+    dateLastActivity;
     pos;
+}
+
+class DoneData {
+    totalCount;
+    lastSevenDaysCount;
 }
 
 /*
@@ -403,3 +504,4 @@ global_disable_auto_refresh
 
 
 */
+
