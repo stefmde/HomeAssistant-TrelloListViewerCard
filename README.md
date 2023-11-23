@@ -18,10 +18,10 @@ TBD
 
 | Name | Type | Default | Description |
 |--|--|--|--|
-| `global_credentials_api_key` | `string` | `null` | The API key provided by trello for your created app. See below on how to get/creat it. |
-| `global_credentials_api_token` | `string` | `null` | The API token provided by trello for your created app. See below on how to get/creat it.. |
-| `global_credentials_board_name` | `string` | `null` | The name of your Board. |
-| `global_credentials_list_name` | `string` | `null` | The name of the list on your board which you want to be displayed. |
+| `global_credentials_api_key` | `string` | `null` | The API key provided by trello for your created app. See below on how to get/creat it. Required. |
+| `global_credentials_api_token` | `string` | `null` | The API token provided by trello for your created app. See below on how to get/creat it. Required. |
+| `global_credentials_board_name` | `string` | `null` | The name of your Board. Required. |
+| `global_credentials_list_name` | `string` | `null` | The name of the list on your board which you want to be displayed. Required. |
 | `global_important_label_name` | `string` | `null` | If you have defined a label for importance, you can specify the name here. |
 | `global_debug` | `bool` | `false` | If you have trouble to get it working, you kan enable this to get more info on the console. |
 | `global_show_header` | `bool` | `true` | Show the Header with the count. |
