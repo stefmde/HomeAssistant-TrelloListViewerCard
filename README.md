@@ -19,17 +19,17 @@ TBD
 
 | Name | Type | Default | Description |
 |--|--|--|--|
-| `global_credentials_api_key` | `string` | `null` | . |
-| `global_credentials_api_token` | `string` | `null` | . |
-| `global_credentials_board_name` | `string` | `null` | . |
-| `global_credentials_list_name` | `string` | `null` | . |
-| `global_important_label_name` | `string` | `null` | . |
-| `global_debug` | `bool` | `false` | . |
-| `global_show_header` | `bool` | `true` | . |
-| `global_show_header_sub_total` | `bool` | `true` | . |
-| `global_update_interval_s` | `int` | `60000` | . |
-| `global_disable_auto_refresh` | `bool` | `false` | . |
-| `global_reduce_requests` | `bool` | `false` | . |
+| `global_credentials_api_key` | `string` | `null` | The API key provided by trello for your created app. See below on how to get/creat it. |
+| `global_credentials_api_token` | `string` | `null` | The API token provided by trello for your created app. See below on how to get/creat it.. |
+| `global_credentials_board_name` | `string` | `null` | The name of your Board. |
+| `global_credentials_list_name` | `string` | `null` | The name of the list on your board which you want to be displayed. |
+| `global_important_label_name` | `string` | `null` | If you have defined a label for importance, you can specify the name here. |
+| `global_debug` | `bool` | `false` | If you have trouble to get it working, you kan enable this to get more info on the console. |
+| `global_show_header` | `bool` | `true` | Show the Header with the count. |
+| `global_show_header_sub_total` | `bool` | `true` | Show the count in the header how much cards are displayed, if lower than the total available cards. |
+| `global_update_interval_s` | `int` | `60000` | The interval on how fast it is updated. |
+| `global_disable_auto_refresh` | `bool` | `false` | You can also disable auto refreshing the cards if you want to do it by yourself. |
+| `global_reduce_requests` | `bool` | `false` | TBD or remove or rename? |
 
 
 ### Cards
@@ -37,16 +37,16 @@ TBD
 
 | Name | Type | Default | Description |
 |--|--|--|--|
-| `cards_limit_count` | `int` | `100` | . |
+| `cards_limit_count` | `int` | `100` | The maximum amount of cards to be shown. |
 | `cards_click_behavior` | `enum` | `none` | TBD. |
 | `cards_click_confirm` | `bool` | `true` | TBD. |
 | `cards_click_move_to_list` | `` | `null` | TBD. |
-| `cards_show_labels` | `bool` | `true` | . |
-| `cards_show_label_text` | `bool` | `true` | . |
-| `cards_show_due` | `bool` | `true` | . |
-| `cards_show_desc` | `bool` | `false` | . |
-| `cards_show_is_important` | `bool` | `true` | . |
-| `cards_sort_by_name` | `bool` | `false` | . |
+| `cards_show_labels` | `bool` | `true` | Enable to show the labels of your cards. |
+| `cards_show_label_text` | `bool` | `true` | Enable to even show the text of your lablels. |
+| `cards_show_due` | `bool` | `true` | Show the due date of your cards if you have set one. |
+| `cards_show_desc` | `bool` | `false` | Show the description of your card if you have set one. May really bloat your view. |
+| `cards_show_is_important` | `bool` | `true` | Can yhow the importance of the card if the label for it is specified in `global_important_label_name`. |
+| `cards_sort_by_name` | `bool` | `false` | By default the sorting of the cards is based on the sorting on your board in Trello but you can also sort them by name here if you want to. |
 
 
 ### Done
@@ -54,10 +54,10 @@ TBD
 
 | Name | Type | Default | Description |
 |--|--|--|--|
-| `done_show` | `bool` | `false` | . |
-| `done_list_name` | `string` | `null` | . |
-| `done_show_total` | `bool` | `false` | . |
-| `done_show_last_seven_days` | `bool` | `true` | . |
+| `done_show` | `bool` | `false` | Show how much cards you have done. Requires `done_list_name` and you need to move your cards to this list if your have finished them. |
+| `done_list_name` | `string` | `null` | The name of the list with your cards you have already finished/done. |
+| `done_show_total` | `bool` | `false` | Show the total number of cards in your done list. |
+| `done_show_last_seven_days` | `bool` | `true` | Show the number of cards in your done list which have been last modified (possible moved to this list) in the last seven days. |
 
 
 ## Trello API Keys
