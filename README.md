@@ -31,7 +31,6 @@ A Plugin for Home Assistant to show a list of your Trello Board to keep track of
 
 
 ### Cards
-TBD
 
 | Name | Type | Default | Description |
 |--|--|--|--|
@@ -58,7 +57,17 @@ TBD
 
 
 ## Trello API Keys
-TBD
+Create a new Power-Up or Integration here: https://trello.com/power-ups/admin
+Set a name for it like `Home Assistant`
+Select your Workspace
+`Iframe URL` can be blank
+`Email`, `Support contact` and `Auther` must be filled in with your data
+Click `Create`
+After that `Generate a new API key`by clicking the matching button
+On the following page you can copy the `API key` 
+On the right side of that is a link called `Token` click that and then `Allow` to generate the matching `API token`
+Copy the `API token` on the following site und save it
+Paste thows two values in the matching property in the config
 
 
 ## Samples
