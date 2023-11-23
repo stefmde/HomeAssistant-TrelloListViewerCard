@@ -15,7 +15,6 @@ TBD
 ## Properties
 
 ### Global
-TBD
 
 | Name | Type | Default | Description |
 |--|--|--|--|
@@ -50,7 +49,6 @@ TBD
 
 
 ### Done
-TBD
 
 | Name | Type | Default | Description |
 |--|--|--|--|
