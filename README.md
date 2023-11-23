@@ -60,7 +60,7 @@ A Plugin for Home Assistant to show a list of your Trello Board to keep track of
 
  1. Create a new `Power-Up or Integration` here: https://trello.com/power-ups/admin
  	 1. Set a name for it like `Home Assistant`
- 	 2. Select your Workspace
+ 	 2. Select your `Workspace`
  	 3. `Iframe URL` can be blank
  	 4. `Email`, `Support contact` and `Auther` must be filled in with your data
  	 5. Click `Create`
