@@ -37,10 +37,10 @@ TBD
 
 | Name | Type | Default | Description |
 |--|--|--|--|
-| `global_cards_limit_count` | `int` | `100` | . |
-| `global_cards_click_behavior` | `enum` | `none` | . |
-| `global_cards_click_confirm` | `bool` | `true` | . |
-| `global_cards_click_move_to_list` | `` | `null` | . |
+| `cards_limit_count` | `int` | `100` | . |
+| `cards_click_behavior` | `enum` | `none` | TBD. |
+| `cards_click_confirm` | `bool` | `true` | TBD. |
+| `cards_click_move_to_list` | `` | `null` | TBD. |
 | `cards_show_labels` | `bool` | `true` | . |
 | `cards_show_label_text` | `bool` | `true` | . |
 | `cards_show_due` | `bool` | `true` | . |

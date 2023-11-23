@@ -59,10 +59,10 @@ class TrelloListViewerCard extends HTMLElement
             const config_global_reduce_requests = this.config.global_reduce_requests !== undefined ? this.config.global_reduce_requests : false;
 
             // Cards
-            const config_cards_limit_count = this.config.global_cards_limit_count !== undefined ? this.config.global_cards_limit_count : 100;
-            const config_cards_click_behavior = this.config.global_cards_click_behavior !== undefined ? this.config.global_cards_click_behavior : "none"; // TODO open, move, close, delete, none
-            const config_cards_click_confirm = this.config.global_cards_click_confirm !== undefined ? this.config.global_cards_click_confirm : true;
-            const config_cards_click_move_to_list = this.config.global_cards_click_move_to_list !== undefined ? this.config.global_cards_click_move_to_list : null;
+            const config_cards_limit_count = this.config.cards_limit_count !== undefined ? this.config.cards_limit_count : 100;
+            const config_cards_click_behavior = this.config.cards_click_behavior !== undefined ? this.config.cards_click_behavior : "none"; // TODO open, move, close, delete, none
+            const config_cards_click_confirm = this.config.cards_click_confirm !== undefined ? this.config.cards_click_confirm : true;
+            const config_cards_click_move_to_list = this.config.cards_click_move_to_list !== undefined ? this.config.cards_click_move_to_list : null;
             
             const config_cards_show_labels = this.config.cards_show_labels !== undefined ? this.config.cards_show_labels : true;
             const config_cards_show_label_text = this.config.cards_show_label_text !== undefined ? this.config.cards_show_label_text : true;
@@ -487,21 +487,3 @@ class DoneData {
     totalCount;
     lastSevenDaysCount;
 }
-
-/*
-# CONFIG
-
-GLOBAL
-global_credentials_api_key
-global_credentials_api_token
-global_board_name
-global_list_name
-global_important_label_name
-global_debug
-global_show_header
-global_update_interval_s
-global_disable_auto_refresh
-
-
-*/
-
