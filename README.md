@@ -57,17 +57,18 @@ A Plugin for Home Assistant to show a list of your Trello Board to keep track of
 
 
 ## Trello API Keys
-Create a new Power-Up or Integration here: https://trello.com/power-ups/admin
-Set a name for it like `Home Assistant`
-Select your Workspace
-`Iframe URL` can be blank
-`Email`, `Support contact` and `Auther` must be filled in with your data
-Click `Create`
-After that `Generate a new API key`by clicking the matching button
-On the following page you can copy the `API key` 
-On the right side of that is a link called `Token` click that and then `Allow` to generate the matching `API token`
-Copy the `API token` on the following site und save it
-Paste thows two values in the matching property in the config
+
+ 1. Create a new Power-Up or Integration here: https://trello.com/power-ups/admin
+ 	 1. Set a name for it like `Home Assistant`
+ 	 2. Select your Workspace
+ 	 3. `Iframe URL` can be blank
+ 	 4. `Email`, `Support contact` and `Auther` must be filled in with your data
+ 	 5. Click `Create`
+ 2. After that `Generate a new API key`by clicking the matching button
+ 3. On the following page you can copy the `API key` 
+ 4. On the right side of that is a link called `Token` click that and then `Allow` to generate the matching `API token`
+ 5. Copy the `API token` on the following site und save it
+ 6. Paste thows two values in the matching property in the config
 
 
 ## Samples
