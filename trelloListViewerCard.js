@@ -74,8 +74,8 @@ class TrelloListViewerCard extends HTMLElement
             // Done
             const config_done_show = this.config.done_show !== undefined ? this.config.done_show : false;
             const config_done_list_name = this.config.done_list_name !== undefined ? this.config.done_list_name : null;
-            const config_done_show_total = this.config.done_total !== undefined ? this.config.done_total : false;
-            const config_done_show_last_seven_days = this.config.done_last_seven_days !== undefined ? this.config.done_last_seven_days : true;
+            const config_done_show_total = this.config.done_show_total !== undefined ? this.config.done_show_total : false;
+            const config_done_show_last_seven_days = this.config.done_show_last_seven_days !== undefined ? this.config.done_show_last_seven_days : true;
 
             let trelloData = new TrelloData();
             let cardDatas = [];

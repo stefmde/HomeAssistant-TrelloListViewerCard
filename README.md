@@ -19,12 +19,17 @@ TBD
 
 | Name | Type | Default | Description |
 |--|--|--|--|
-| `global_credentials_access_token` | `string` | `null` | The AccessToken of your Twitch app. [See below on how to create one.](https://github.com/stefmde/HomeAssistant-TwitchFollowedLiveStreamsCard/tree/main#twitch-add-dev-app) Will break the card and log an error if empty or invalid. |
-| `global_credentials_client_id` | `string` | `null` | The ClientId of your Twitch app. [See below on how to create one.](https://github.com/stefmde/HomeAssistant-TwitchFollowedLiveStreamsCard/tree/main#twitch-add-dev-app) Will break the card and log an error if empty or invalid. |
-| `global_credentials_user_name` | `string` | `null` | Your Twitch username. Will break the card and log an error if empty or invalid. |
-| `global_debug` | `bool` | `false` | Can be set to `true` if you have problems to see more details in the console log. |
-| `global_show_header` | `bool` | `true` | Shows the card header with the count if set to `true`. |
-| `global_update_interval_s` | `int` | `60` | The time in seconds used for the interval to update the streams displayed. |
+| `global_credentials_api_key` | `string` | `null` | . |
+| `global_credentials_api_token` | `string` | `null` | . |
+| `global_credentials_board_name` | `string` | `null` | . |
+| `global_credentials_list_name` | `string` | `null` | . |
+| `global_important_label_name` | `string` | `null` | . |
+| `global_debug` | `bool` | `false` | . |
+| `global_show_header` | `bool` | `true` | . |
+| `global_show_header_sub_total` | `bool` | `true` | . |
+| `global_update_interval_s` | `int` | `60000` | . |
+| `global_disable_auto_refresh` | `bool` | `false` | . |
+| `global_reduce_requests` | `bool` | `false` | . |
 
 
 ### Cards
@@ -32,7 +37,27 @@ TBD
 
 | Name | Type | Default | Description |
 |--|--|--|--|
-| `streams_disable_auto_refresh` | `bool` | `false` | Disables auto refreshing the streams if set to `true`. Can be useful if you want to refresh it manually. |
+| `global_cards_limit_count` | `int` | `100` | . |
+| `global_cards_click_behavior` | `enum` | `none` | . |
+| `global_cards_click_confirm` | `bool` | `true` | . |
+| `global_cards_click_move_to_list` | `` | `null` | . |
+| `cards_show_labels` | `bool` | `true` | . |
+| `cards_show_label_text` | `bool` | `true` | . |
+| `cards_show_due` | `bool` | `true` | . |
+| `cards_show_desc` | `bool` | `false` | . |
+| `cards_show_is_important` | `bool` | `true` | . |
+| `cards_sort_by_name` | `bool` | `false` | . |
+
+
+### Done
+TBD
+
+| Name | Type | Default | Description |
+|--|--|--|--|
+| `done_show` | `bool` | `false` | . |
+| `done_list_name` | `string` | `null` | . |
+| `done_show_total` | `bool` | `false` | . |
+| `done_show_last_seven_days` | `bool` | `true` | . |
 
 
 ## Trello API Keys
