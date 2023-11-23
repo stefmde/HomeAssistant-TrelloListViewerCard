@@ -9,8 +9,7 @@
 
 
 ## Description
-TBD
-  
+A Plugin for Home Assistant to show a list of your Trello Board to keep track of your cards
 
 ## Properties
 
