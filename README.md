@@ -5,7 +5,7 @@
 |--|--|
 | ![Trello Cards](https://raw.githubusercontent.com/stefmde/HomeAssistant-TrelloListViewerCard/main/img/test-cards-in-trello.png) | ![Home Assistant Preview](https://raw.githubusercontent.com/stefmde/HomeAssistant-TrelloListViewerCard/main/img/basic_config.png) |
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs)
 
 
 ## Description
